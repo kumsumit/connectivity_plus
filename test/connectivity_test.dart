@@ -28,8 +28,7 @@ void main() {
 }
 
 class MockConnectivityPlatform extends Mock
-    with MockPlatformInterfaceMixin
-    implements ConnectivityPlatform {
+    implements ConnectivityPlatform, MockPlatformInterfaceMixin {
   @override
   Future<ConnectivityResult> checkConnectivity() async {
     return kCheckConnectivityResult;
