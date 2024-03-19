@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
@@ -49,14 +50,23 @@ public class ConnectivityBroadcastReceiver extends BroadcastReceiver
             }
 
             @Override
+            public void onCapabilitiesChanged(
+                Network network, NetworkCapabilities networkCapabilities) {
+              sendEvent();
+            }
+
+            @Override
             public void onLost(Network network) {
-              sendEvent(Connectivity.CONNECTIVITY_NONE);
+              sendEvent();
             }
           };
       connectivity.getConnectivityManager().registerDefaultNetworkCallback(networkCallback);
     } else {
       context.registerReceiver(this, new IntentFilter(CONNECTIVITY_ACTION));
     }
+    // Need to emit first event with connectivity types without waiting for first change in system
+    // that might happen much later
+    sendEvent();
   }
 
   @Override
@@ -70,7 +80,7 @@ public class ConnectivityBroadcastReceiver extends BroadcastReceiver
       try {
         context.unregisterReceiver(this);
       } catch (Exception e) {
-        //listen never called, ignore the error
+        // listen never called, ignore the error
       }
     }
   }
@@ -78,17 +88,15 @@ public class ConnectivityBroadcastReceiver extends BroadcastReceiver
   @Override
   public void onReceive(Context context, Intent intent) {
     if (events != null) {
-      events.success(connectivity.getNetworkType());
+      events.success(connectivity.getNetworkTypes());
     }
   }
 
   private void sendEvent() {
-    Runnable runnable = () -> events.success(connectivity.getNetworkType());
-    mainHandler.post(runnable);
-  }
-
-  private void sendEvent(final String networkType) {
-    Runnable runnable = () -> events.success(networkType);
-    mainHandler.post(runnable);
+    Runnable runnable = () -> events.success(connectivity.getNetworkTypes());
+    // The dalay is needed because callback methods suffer from race conditions.
+    // More info:
+    // https://developer.android.com/develop/connectivity/network-ops/reading-network-state#listening-events
+    mainHandler.postDelayed(runnable, 100);
   }
 }

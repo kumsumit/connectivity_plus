@@ -8,7 +8,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:mockito/mockito.dart';
 
-const ConnectivityResult kCheckConnectivityResult = ConnectivityResult.wifi;
+const List<ConnectivityResult> kCheckConnectivityResult = [
+  ConnectivityResult.wifi
+];
 
 void main() {
   group('Connectivity', () {
@@ -30,7 +32,7 @@ void main() {
 class MockConnectivityPlatform extends Mock
     implements ConnectivityPlatform, MockPlatformInterfaceMixin {
   @override
-  Future<ConnectivityResult> checkConnectivity() async {
+  Future<List<ConnectivityResult>> checkConnectivity() async {
     return kCheckConnectivityResult;
   }
 }
