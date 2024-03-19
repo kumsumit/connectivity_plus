@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:web/helpers.dart';
+import 'package:web/web.dart';
 
 import 'package:connectivity_plus_platform_interface/connectivity_plus_platform_interface.dart';
 
