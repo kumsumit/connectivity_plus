@@ -7,8 +7,12 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+<<<<<<< HEAD
   connectivity_plus:
       path: ../ 
+=======
+  connectivity_plus: ^6.0.0
+>>>>>>> refs/remotes/origin/main
 
 dev_dependencies:
   flutter_driver:
