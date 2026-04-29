@@ -10,8 +10,8 @@ topics:
   - utils
 
 environment:
-  sdk: ">=3.7.2 <4.0.0"
-  flutter: ">=3.27.2"
+  sdk: ">=3.11.2 <4.0.0"
+  flutter: ">=3.41.2"
 
 flutter:
   plugin:
@@ -39,17 +39,17 @@ dependencies:
   connectivity_plus_platform_interface:
     git: https://github.com/kumsumit/connectivity_plus_platform_interface.git
   web: ">=0.5.0 <2.0.0"
-  meta: ^1.11.0
+  meta: ^1.17.0
   nm: ^0.5.0
-  collection: ^1.18.0
+  collection: ^1.19.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^2.4.6
-  dbus: ^0.7.8
-  flutter_lints: ">=5.0.0 <6.0.0"
-  mockito: ^5.4.3
+  build_runner: ^2.14.1
+  dbus: ^0.7.12
+  flutter_lints: ">=6.0.0"
+  mockito: ^5.6.4
   plugin_platform_interface:
     git: https://github.com/kumsumit/plugin_platform_interface.git
   test: ^1.22.0
